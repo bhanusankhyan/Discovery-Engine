@@ -1,0 +1,156 @@
+{
+  "entities": [
+    {
+      "id": "project_aether",
+      "name": "Project Aether",
+      "type": "PROJECT",
+      "description": "A next-generation clean energy grid initiative aiming to decentralize power distribution using smart contracts and AI."
+    },
+    {
+      "id": "dr_elena_rostova",
+      "name": "Dr. Elena Rostova",
+      "type": "PERSON",
+      "description": "Chief Scientist and initiator of Project Aether. Leading expert in plasma physics and smart grid optimization."
+    },
+    {
+      "id": "quantum_battery_core",
+      "name": "Quantum Battery Core",
+      "type": "TECHNOLOGY",
+      "description": "The primary energy storage technology used in Project Aether, allowing instantaneous charging and micro-second power balancing."
+    },
+    {
+      "id": "gridos",
+      "name": "GridOS",
+      "type": "SOFTWARE",
+      "description": "The proprietary distributed operating system that manages the power flow, billing, and optimization of the energy grid."
+    },
+    {
+      "id": "aether_labs",
+      "name": "Aether Labs",
+      "type": "ORGANIZATION",
+      "description": "The research facility in Geneva, Switzerland, where Project Aether was conceptualized and developed."
+    },
+    {
+      "id": "marcus_vance",
+      "name": "Marcus Vance",
+      "type": "PERSON",
+      "description": "Director of Security at Aether Labs. Former defense contractor responsible for guarding GridOS from cyber threats."
+    },
+    {
+      "id": "cyber_attack_2025",
+      "name": "Cyber Attack of 2025",
+      "type": "EVENT",
+      "description": "A sophisticated state-sponsored malware breach targeting the GridOS beta, resulting in a temporary microgrid blackout in Geneva."
+    }
+  ],
+  "relationships": [
+    {
+      "source": "Dr. Elena Rostova",
+      "target": "Project Aether",
+      "description": "Dr. Elena Rostova is the founder and technical lead of Project Aether, directing all research and engineering pipelines.",
+      "weight": 0.9
+    },
+    {
+      "source": "Project Aether",
+      "target": "Aether Labs",
+      "description": "Project Aether is headquartered and researched at Aether Labs in Geneva.",
+      "weight": 0.8
+    },
+    {
+      "source": "Project Aether",
+      "target": "Quantum Battery Core",
+      "description": "Project Aether relies on the Quantum Battery Core for high-efficiency grid energy storage.",
+      "weight": 0.95
+    },
+    {
+      "source": "Project Aether",
+      "target": "GridOS",
+      "description": "Project Aether is controlled and managed by GridOS software.",
+      "weight": 0.9
+    },
+    {
+      "source": "Dr. Elena Rostova",
+      "target": "GridOS",
+      "description": "Dr. Elena Rostova designed the mathematical algorithms running in GridOS.",
+      "weight": 0.7
+    },
+    {
+      "source": "Marcus Vance",
+      "target": "Aether Labs",
+      "description": "Marcus Vance serves as the head of security for Aether Labs.",
+      "weight": 0.8
+    },
+    {
+      "source": "Marcus Vance",
+      "target": "GridOS",
+      "description": "Marcus Vance defends GridOS from external digital intrusions and implements firewall systems.",
+      "weight": 0.85
+    },
+    {
+      "source": "cyber_attack_2025",
+      "target": "GridOS",
+      "description": "The Cyber Attack of 2025 targeted GridOS to disrupt grid operations.",
+      "weight": 0.9
+    },
+    {
+      "source": "cyber_attack_2025",
+      "target": "Marcus Vance",
+      "description": "Marcus Vance led the containment effort during the Cyber Attack of 2025, neutralizing the malware in 4 hours.",
+      "weight": 0.75
+    }
+  ],
+  "community_reports": [
+    {
+      "id": "community_1",
+      "title": "Grid Technology & Infrastructure (Quantum Core & GridOS)",
+      "summary": "This community centers around the technological backbone of Project Aether. The key components are the Quantum Battery Core (physical storage) and GridOS (operational software). GridOS acts as the orchestrator of the decentralized energy network, and its stability is crucial for the project's success. It represents the interface between hardware battery systems and mathematical control software designed by Dr. Rostova.",
+      "findings": [
+        "The Quantum Battery Core provides near-instantaneous energy balancing.",
+        "GridOS manages power flow, user billing, and smart contract orchestration.",
+        "The technological integrity is dependent on the algorithms developed by Elena Rostova."
+      ]
+    },
+    {
+      "id": "community_2",
+      "title": "Aether Leadership and Administrative Operations",
+      "summary": "This community encompasses the human and organizational leadership of Project Aether. Spearheaded by Dr. Elena Rostova at Aether Labs in Geneva, this group handles fundraising, research direction, and high-level project goals. The main mission is to design a secure, decentralized power distribution network to combat regional fossil-fuel dependency.",
+      "findings": [
+        "Dr. Elena Rostova is the primary visionary and chief scientist.",
+        "Aether Labs is the central physical hub located in Geneva, Switzerland.",
+        "The operational scope includes managing corporate partnerships and academic collaborations."
+      ]
+    },
+    {
+      "id": "community_3",
+      "title": "Security Operations and Incident Response",
+      "summary": "This community is focused on the security and threat landscape of Project Aether. Led by Security Director Marcus Vance, the operations are designed to safeguard Aether Labs' digital infrastructure, especially GridOS. The community's history is heavily defined by the Cyber Attack of 2025, a critical security breach that tested the resilience of the grid system.",
+      "findings": [
+        "Marcus Vance leads security protocols and digital firewalls.",
+        "The Cyber Attack of 2025 exposed vulnerabilities in GridOS, leading to a temporary grid blackout in Geneva.",
+        "Vance successfully mitigated the 2025 threat in under four hours, establishing new defensive standards."
+      ]
+    }
+  ],
+  "text_chunks": [
+    {
+      "id": "chunk_1",
+      "content": "Project Aether was officially launched on October 12, 2024, at Aether Labs in Geneva, Switzerland. Led by Chief Scientist Dr. Elena Rostova, the project's primary mission is to create a decentralized energy grid that eliminates single points of failure in national power transmission. By utilizing smart contracts on a high-throughput blockchain, the grid allows immediate peer-to-peer energy trading.",
+      "source": "Aether_Project_Charter.txt"
+    },
+    {
+      "id": "chunk_2",
+      "content": "On April 3, 2025, a critical incident occurred. A cyber-attack, later attributed to a group known as 'Lumen Strike', targeted the beta version of GridOS. The malware penetrated the peripheral firewalls of Aether Labs and shut down the local power distributor for 4 hours. Fortunately, Security Director Marcus Vance led the team that isolated the breach and restored grid stability before any permanent damage was done.",
+      "source": "Security_Report_2025.txt"
+    },
+    {
+      "id": "chunk_3",
+      "content": "The Quantum Battery Core (QBC) operates on principles of subatomic energy trapping. Developed in collaboration with the Geneva Tech Institute, the QBC achieves a round-trip efficiency of 99.4%, a massive leap compared to standard lithium-ion batteries. In Project Aether, QBCs are deployed at localized neighborhood substations to absorb spikes in solar and wind generation.",
+      "source": "Hardware_Specs_Quantum_Core.txt"
+    },
+    {
+      "id": "chunk_4",
+      "content": "GridOS is written in Rust to ensure memory safety and concurrency support. The software features an automated market maker (AMM) module that adjusts electricity pricing dynamically based on local supply and demand. Elena Rostova designed the load-balancing controller that prevents transformers from overheating during peak charging times.",
+      "source": "GridOS_Software_Architecture.txt"
+    }
+  ]
+}

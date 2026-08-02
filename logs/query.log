@@ -1,0 +1,169 @@
+2026-07-28 01:28:58.0407 - INFO - graphrag_llm.metrics.log_metrics_writer - Metrics for openai/gemini-3.1-flash-lite: {
+  "failure_rate": 0.0,
+  "compute_duration_per_response_seconds": 0.0,
+  "cache_hit_rate": 0.0,
+  "tokens_per_response": 0.0,
+  "cost_per_response": 0.0
+}
+2026-07-28 01:29:26.0284 - INFO - graphrag_llm.metrics.log_metrics_writer - Metrics for openai/gemini-3.1-flash-lite: {
+  "attempted_request_count": 2,
+  "successful_response_count": 2,
+  "failed_response_count": 0,
+  "failure_rate": 0.0,
+  "requests_with_retries": 0,
+  "retries": 0,
+  "retry_rate": 0.0,
+  "compute_duration_seconds": 2.403614044189453,
+  "compute_duration_per_response_seconds": 2.403614044189453,
+  "cache_hit_rate": 0.0,
+  "streaming_responses": 1,
+  "responses_with_tokens": 1,
+  "prompt_tokens": 1127,
+  "completion_tokens": 66,
+  "total_tokens": 1193,
+  "tokens_per_response": 1193.0,
+  "cost_per_response": 0.0
+}
+2026-07-28 01:30:04.0209 - ERROR - graphrag_llm.middleware.with_logging - Request failed with exception=litellm.NotFoundError: NotFoundError: OpenAIException - Error code: 404 - {'error': {'code': 404, 'message': 'models/gemini-embedding-002 is not found for API version v1main, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\litellm\llms\openai\openai.py", line 1308, in embedding
+    headers, sync_embedding_response = self.make_sync_openai_embedding_request(
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\litellm\litellm_core_utils\logging_utils.py", line 336, in sync_wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\litellm\llms\openai\openai.py", line 1183, in make_sync_openai_embedding_request
+    raise e
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\litellm\llms\openai\openai.py", line 1177, in make_sync_openai_embedding_request
+    raw_response = openai_client.embeddings.with_raw_response.create(**data, timeout=timeout)  # type: ignore
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\openai\_legacy_response.py", line 369, in wrapped
+    return cast(LegacyAPIResponse[R], func(*args, **kwargs))
+                                      ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\openai\resources\embeddings.py", line 136, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\openai\_base_client.py", line 1360, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\openai\_base_client.py", line 1133, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.NotFoundError: Error code: 404 - {'error': {'code': 404, 'message': 'models/gemini-embedding-002 is not found for API version v1main, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\litellm\main.py", line 6081, in embedding
+    response = openai_chat_completions.embedding(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\litellm\llms\openai\openai.py", line 1339, in embedding
+    raise OpenAIError(status_code=status_code, message=error_text, headers=error_headers)
+litellm.llms.openai.common_utils.OpenAIError: Error code: 404 - {'error': {'code': 404, 'message': 'models/gemini-embedding-002 is not found for API version v1main, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\graphrag_llm\middleware\with_logging.py", line 49, in _request_count_middleware
+    return sync_middleware(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\graphrag_llm\middleware\with_request_count.py", line 53, in _request_count_middleware
+    result = sync_middleware(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\graphrag_llm\middleware\with_retries.py", line 47, in _retry_middleware
+    return retrier.retry(
+           ^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\graphrag_llm\retry\exponential_retry.py", line 70, in retry
+    return func(**input_args)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\graphrag_llm\middleware\with_metrics.py", line 56, in _metrics_middleware
+    response = sync_middleware(**kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\graphrag_llm\embedding\lite_llm_embedding.py", line 188, in _base_embedding
+    response = litellm.embedding(**new_args)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\litellm\utils.py", line 1577, in wrapper
+    raise e
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\litellm\utils.py", line 1425, in wrapper
+    result = original_function(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\litellm\main.py", line 6896, in embedding
+    raise exception_type(
+          ^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\litellm\litellm_core_utils\exception_mapping_utils.py", line 2499, in exception_type
+    raise e  # it's already mapped
+    ^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\litellm\litellm_core_utils\exception_mapping_utils.py", line 2265, in exception_type
+    _map_openai_exception(
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\litellm\litellm_core_utils\exception_mapping_utils.py", line 407, in _map_openai_exception
+    raise NotFoundError(
+litellm.exceptions.NotFoundError: litellm.NotFoundError: NotFoundError: OpenAIException - Error code: 404 - {'error': {'code': 404, 'message': 'models/gemini-embedding-002 is not found for API version v1main, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-07-28 01:30:04.0350 - INFO - graphrag_llm.metrics.log_metrics_writer - Metrics for openai/gemini-embedding-002: {
+  "attempted_request_count": 1,
+  "successful_response_count": 0,
+  "failed_response_count": 1,
+  "failure_rate": 1.0,
+  "requests_with_retries": 0,
+  "retries": 0,
+  "retry_rate": 0.0,
+  "compute_duration_per_response_seconds": 0.0,
+  "cache_hit_rate": 0.0,
+  "tokens_per_response": 0.0,
+  "cost_per_response": 0.0
+}
+2026-07-28 01:30:04.0350 - INFO - graphrag_llm.metrics.log_metrics_writer - Metrics for openai/gemini-3.1-flash-lite: {
+  "failure_rate": 0.0,
+  "compute_duration_per_response_seconds": 0.0,
+  "cache_hit_rate": 0.0,
+  "tokens_per_response": 0.0,
+  "cost_per_response": 0.0
+}
+2026-07-28 01:44:35.0854 - ERROR - graphrag_llm.middleware.with_logging - Request failed after 7 retries with exception=1 validation error for LLMEmbeddingResponse
+data.0.index
+  Input should be a valid integer [type=int_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.13/v/int_type
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\graphrag_llm\middleware\with_logging.py", line 49, in _request_count_middleware
+    return sync_middleware(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\graphrag_llm\middleware\with_request_count.py", line 53, in _request_count_middleware
+    result = sync_middleware(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\graphrag_llm\middleware\with_retries.py", line 47, in _retry_middleware
+    return retrier.retry(
+           ^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\graphrag_llm\retry\exponential_retry.py", line 70, in retry
+    return func(**input_args)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\graphrag_llm\middleware\with_metrics.py", line 56, in _metrics_middleware
+    response = sync_middleware(**kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\graphrag_llm\embedding\lite_llm_embedding.py", line 189, in _base_embedding
+    return LLMEmbeddingResponse(**response.model_dump())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\Lib\site-packages\pydantic\main.py", line 263, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for LLMEmbeddingResponse
+data.0.index
+  Input should be a valid integer [type=int_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.13/v/int_type
+2026-07-28 01:44:35.0858 - INFO - graphrag_llm.metrics.log_metrics_writer - Metrics for openai/gemini-embedding-001: {
+  "attempted_request_count": 1,
+  "successful_response_count": 0,
+  "failed_response_count": 1,
+  "failure_rate": 1.0,
+  "requests_with_retries": 1,
+  "retries": 7,
+  "retry_rate": 0.875,
+  "compute_duration_per_response_seconds": 0.0,
+  "cache_hit_rate": 0.0,
+  "tokens_per_response": 0.0,
+  "cost_per_response": 0.0
+}
+2026-07-28 01:44:35.0858 - INFO - graphrag_llm.metrics.log_metrics_writer - Metrics for openai/gemini-3.1-flash-lite: {
+  "failure_rate": 0.0,
+  "compute_duration_per_response_seconds": 0.0,
+  "cache_hit_rate": 0.0,
+  "tokens_per_response": 0.0,
+  "cost_per_response": 0.0
+}

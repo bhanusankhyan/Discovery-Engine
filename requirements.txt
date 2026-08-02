@@ -1,0 +1,22 @@
+# Core LLM clients
+google-genai==2.14.0
+openai==2.48.0
+litellm==1.92.0
+
+# GraphRAG knowledge base
+graphrag==3.1.1
+lancedb==0.34.0
+
+# Data & NLP
+pydantic==2.13.4
+spacy==3.8.14
+nltk==3.10.0
+
+# Utilities
+python-dotenv==1.0.1
+colorama==0.4.6
+pandas
+numpy
+pyarrow
+fastapi
+uvicorn
