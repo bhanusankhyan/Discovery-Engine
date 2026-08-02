@@ -27,10 +27,8 @@ except ImportError:
     from guardrails import GuardrailViolation
 
 origins = [
-    "http://localhost:3000",    # Common React port
     "http://localhost:5173",    # Common Vite/Vue/Svelte port
-    "http://127.0.0.1:3000",
-    "https://yourfrontenddomain.com" # Your production frontend domain
+    "https://review-analyzer-d4x8.onrender.com" # Your production frontend domain
 ]
 
 # FastAPI Instance
