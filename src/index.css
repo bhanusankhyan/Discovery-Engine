@@ -4,17 +4,17 @@
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   
   /* Very light grey theme colors */
-  --bg-primary: #f8f9fa;       /* Very light grey background */
-  --bg-card: #ffffff;          /* White cards */
+  --bg-primary: #f8f9fa;       
+  --bg-card: #ffffff;          
   --bg-input: #ffffff;
-  --bg-bubble-user: #e9ecef;   /* Light grey for user bubble */
-  --bg-bubble-bot: transparent;/* Bot messages don't need a heavy background in modern minimalist look, or very light card */
+  --bg-bubble-user: #e9ecef;   
+  --bg-bubble-bot: transparent;
   
-  --text-primary: #212529;     /* Charcoal text */
-  --text-secondary: #495057;   /* Slate text */
-  --text-muted: #6c757d;       /* Muted text */
+  --text-primary: #212529;     
+  --text-secondary: #495057;   
+  --text-muted: #6c757d;       
   
-  --accent-color: #0d6efd;     /* High-end clean blue */
+  --accent-color: #0d6efd;     
   --accent-hover: #0b5ed7;
   --border-color: #dee2e6;
   
@@ -68,6 +68,7 @@ body, html {
   overflow: hidden;
 }
 
+
 /* Message Area */
 .messages-container {
   flex: 1;
@@ -90,6 +91,16 @@ body, html {
   max-width: 500px;
   padding: 2rem;
   animation: fadeIn 0.6s ease-out;
+}
+
+.welcome-logo-img {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 1.5rem;
+  border: 2px solid white;
 }
 
 .welcome-quote {
@@ -127,6 +138,7 @@ body, html {
   font-weight: 600;
   font-size: 0.85rem;
   box-shadow: var(--shadow-sm);
+  object-fit: cover;
 }
 
 .avatar.user {
@@ -137,7 +149,6 @@ body, html {
 .avatar.bot {
   background-color: white;
   border: 1px solid var(--border-color);
-  color: var(--accent-color);
 }
 
 .message-content {
@@ -158,6 +169,7 @@ body, html {
   line-height: 1.5;
   word-break: break-word;
   box-shadow: var(--shadow-sm);
+  white-space: pre-wrap; /* Support \n and consecutive spaces automatically */
 }
 
 .message-row.user .bubble {
@@ -203,7 +215,7 @@ body, html {
   40% { transform: scale(1.0); }
 }
 
-/* Input Area Fixed Footer styling (floating look like ChatGPT) */
+/* Input Area Fixed Footer styling */
 .input-area-fixed {
   position: absolute;
   bottom: 0;
@@ -244,7 +256,7 @@ body, html {
   color: var(--text-primary);
   resize: none;
   max-height: 200px;
-  min-height: 72px;
+  min-height: 72px; /* 1.5x of 48px */
   padding: 0.4rem 0.5rem 0.4rem 0;
   line-height: 1.4;
 }
@@ -341,4 +353,41 @@ body, html {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #cbd5e1;
+}
+
+/* Markdown Custom Formats inside Chat Bubbles */
+.chat-heading {
+  color: var(--text-primary);
+  margin-top: 0.85rem;
+  margin-bottom: 0.4rem;
+  line-height: 1.35;
+}
+
+/* First element doesn't need top margin inside bubble */
+.bubble > .chat-heading:first-child {
+  margin-top: 0;
+}
+
+.chat-h1 { font-size: 1.5rem; font-weight: 700; }
+.chat-h2 { font-size: 1.35rem; font-weight: 600; }
+.chat-h3 { font-size: 1.2rem; font-weight: 600; }
+.chat-h4 { font-size: 1.1rem; font-weight: 600; }
+.chat-h5 { font-size: 1.0rem; font-weight: 600; }
+.chat-h6 { font-size: 0.95rem; font-weight: 600; }
+
+.chat-bold {
+  font-weight: 700;
+}
+
+.chat-paragraph {
+  margin-bottom: 0.35rem;
+  line-height: 1.5;
+}
+
+.bubble > .chat-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+.chat-newline-spacer {
+  height: 0.75rem;
 }
