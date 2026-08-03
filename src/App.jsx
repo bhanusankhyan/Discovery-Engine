@@ -2,6 +2,30 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, Sparkles, AlertCircle, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// Simple markdown to HTML converter for headings, paragraphs, and bold text
+const renderMarkdown = (text) => {
+  if (!text) return '';
+  const escapeHtml = (str) =>
+    str.replace(/&/g, '&amp;')
+       .replace(/</g, '&lt;')
+       .replace(/>/g, '&gt;');
+  const lines = text.split('\n');
+  const htmlLines = lines.map((line) => {
+    const headingMatch = line.match(/^(#{1,6})\s+(.*)/);
+    if (headingMatch) {
+      const level = headingMatch[1].length;
+      const content = escapeHtml(headingMatch[2].trim());
+      return `<h${level}>${content}</h${level}>`;
+    }
+    // Process bold syntax **text**
+    const escaped = escapeHtml(line);
+    const boldProcessed = escaped.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    if (line.trim() === '') return '';
+    return `<p>${boldProcessed}</p>`;
+  }).filter(Boolean);
+  return htmlLines.join('');
+};
+
 function App() {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
@@ -135,12 +159,18 @@ function App() {
                   transition={{ duration: 0.35, ease: 'easeOut' }}
                   className={`message-row ${message.role}`}
                 >
-                  <div className={`avatar ${message.role}`}>
-                    {message.role === 'user' ? 'U' : 'AI'}
-                  </div>
+                  {message.role === 'user' ? (
+                    <div className="avatar user">U</div>
+                  ) : (
+                    <img src="/ai-avatar.jpg" alt="AI" className="avatar bot" />
+                  )}
                   <div className="message-content">
                     <div className="bubble">
-                      {message.content}
+                      {message.role === 'bot' ? (
+                        <div dangerouslySetInnerHTML={{ __html: renderMarkdown(message.content) }} />
+                      ) : (
+                        message.content
+                      )}
                     </div>
                     <span className="message-time">{message.timestamp}</span>
                   </div>
@@ -154,7 +184,7 @@ function App() {
                   exit={{ opacity: 0 }}
                   className="message-row bot"
                 >
-                  <div className="avatar bot">AI</div>
+                  <img src="/ai-avatar.jpg" alt="AI" className="avatar bot" />
                   <div className="message-content">
                     <div className="bubble typing-bubble">
                       <div className="dot"></div>

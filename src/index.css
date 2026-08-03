@@ -355,39 +355,44 @@ body, html {
   background: #cbd5e1;
 }
 
-/* Markdown Custom Formats inside Chat Bubbles */
-.chat-heading {
+
+
+/* Styling HTML markup elements inside the bubble */
+.bubble h1, .bubble h2, .bubble h3, .bubble h4, .bubble h5, .bubble h6 {
   color: var(--text-primary);
   margin-top: 0.85rem;
   margin-bottom: 0.4rem;
   line-height: 1.35;
 }
 
-/* First element doesn't need top margin inside bubble */
-.bubble > .chat-heading:first-child {
-  margin-top: 0;
-}
+.bubble h1 { font-size: 1.5rem; font-weight: 700; }
+.bubble h2 { font-size: 1.35rem; font-weight: 600; }
+.bubble h3 { font-size: 1.2rem; font-weight: 600; }
+.bubble h4 { font-size: 1.1rem; font-weight: 600; }
 
-.chat-h1 { font-size: 1.5rem; font-weight: 700; }
-.chat-h2 { font-size: 1.35rem; font-weight: 600; }
-.chat-h3 { font-size: 1.2rem; font-weight: 600; }
-.chat-h4 { font-size: 1.1rem; font-weight: 600; }
-.chat-h5 { font-size: 1.0rem; font-weight: 600; }
-.chat-h6 { font-size: 0.95rem; font-weight: 600; }
-
-.chat-bold {
-  font-weight: 700;
-}
-
-.chat-paragraph {
+.bubble p {
   margin-bottom: 0.35rem;
   line-height: 1.5;
 }
 
-.bubble > .chat-paragraph:last-child {
-  margin-bottom: 0;
+.bubble strong, .bubble b {
+  font-weight: 700;
 }
 
-.chat-newline-spacer {
-  height: 0.75rem;
+.bubble ul, .bubble ol {
+  margin-left: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.bubble li {
+  margin-bottom: 0.25rem;
+}
+
+/* Remove margin for first/last elements inside bubble */
+.bubble > *:first-child, .bubble > div > *:first-child {
+  margin-top: 0;
+}
+
+.bubble > *:last-child, .bubble > div > *:last-child {
+  margin-bottom: 0;
 }
