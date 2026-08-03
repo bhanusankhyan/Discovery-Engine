@@ -24,18 +24,23 @@ class QueryPlan(BaseModel):
 
 class PlanningAgent:
     def __init__(self):
+        self.openai_key = os.getenv("OPENAI_API_KEY")
         self.gemini_key = os.getenv("GEMINI_API_KEY")
-        self.model_name = os.getenv("GEMINI_MODEL", "gemini-3.1-flash-lite")
-        self.litellm_model = f"gemini/{self.model_name}"
+        self.model_name = os.getenv("LLM_MODEL", "gpt-4o-mini")
+        
+        self.litellm_model = self.model_name
+        if "/" not in self.litellm_model:
+            self.litellm_model = f"openai/{self.litellm_model}"
 
-        if not self.gemini_key:
-            print("[Warning] GEMINI_API_KEY not found in .env. Heuristic fallback will be used.")
+        self.active_key = self.openai_key or self.gemini_key
+        if not self.active_key:
+            print("[Warning] No API keys found in .env. Heuristic fallback will be used.")
 
-        self.client_type = "litellm" if self.gemini_key else None
+        self.client_type = "litellm" if self.active_key else None
 
         # Register LiteLLM native guardrail hooks (once per process)
         setup_guardrails(
-            gemini_key=self.gemini_key,
+            gemini_key=self.active_key,
             classifier_model=self.litellm_model,
             enable_llm_classifier=True,
         )
@@ -81,7 +86,7 @@ class PlanningAgent:
                     }
                     }
                 ],
-                api_key=self.gemini_key,
+                api_key=self.active_key,
                 response_format={"type": "json_object"},
             )
             raw = response.choices[0].message.content

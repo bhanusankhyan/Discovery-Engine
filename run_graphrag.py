@@ -2,9 +2,9 @@ import sys
 import logging
 from pathlib import Path
 
-# Reconfigure stdout/stderr to be line-buffered immediately
-sys.stdout.reconfigure(line_buffering=True)
-sys.stderr.reconfigure(line_buffering=True)
+# Reconfigure stdout/stderr to use utf-8 encoding and line-buffering
+sys.stdout.reconfigure(line_buffering=True, encoding="utf-8")
+sys.stderr.reconfigure(line_buffering=True, encoding="utf-8")
 
 # Set up logging to print directly to stdout
 logging.basicConfig(

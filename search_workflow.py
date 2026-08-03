@@ -128,12 +128,13 @@ def load_parquet_tables(output_dir: Path) -> Dict[str, pd.DataFrame]:
 
 
 def build_graphrag_config(
-    api_key: str,
-    llm_model: str = "gemini/gemini-3.5-flash-lite",
+    llm_api_key: str,
+    emb_api_key: str,
+    llm_model: str = "openai/gpt-4o-mini",
     embedding_model: str = "gemini/gemini-embedding-001",
 ) -> GraphRagConfig:
     """
-    Constructs GraphRagConfig configured for LiteLLM with Google Gemini models.
+    Constructs GraphRagConfig configured for LiteLLM with OpenAI/Gemini models.
     """
     def parse_model(model_str: str, default_provider: str = "gemini"):
         if "/" in model_str:
@@ -146,13 +147,13 @@ def build_graphrag_config(
 
     completion_config = ModelConfig(
         model=llm_name,
-        api_key=api_key,
+        api_key=llm_api_key,
         model_provider=llm_provider,
     )
 
     embedding_config = ModelConfig(
         model=emb_name,
-        api_key=api_key,
+        api_key=emb_api_key,
         model_provider=emb_provider,
     )
 
@@ -253,7 +254,7 @@ async def run_local_search(
 
     description_embedding_store = initialize_vector_store(
         db_uri=lancedb_dir,
-        collection_name="entity_description_embeddings",
+        collection_name="entity_description",
     )
 
     search_engine = get_local_search_engine(
@@ -303,7 +304,7 @@ async def run_drift_search(
 
     description_embedding_store = initialize_vector_store(
         db_uri=lancedb_dir,
-        collection_name="entity_description_embeddings",
+        collection_name="entity_description",
     )
 
     search_engine = get_drift_search_engine(
@@ -333,7 +334,7 @@ async def run_basic_search(
     text_units = read_indexer_text_units(tables["text_units"])
     text_unit_embeddings = initialize_vector_store(
         db_uri=lancedb_dir,
-        collection_name="text_unit_embeddings",
+        collection_name="text_unit_text",
     )
 
     search_engine = get_basic_search_engine(
@@ -378,14 +379,14 @@ def parse_args(query, plan):
     parser.add_argument(
         "--api_key",
         type=str,
-        default=os.getenv("GEMINI_API_KEY", "default_key"),
-        help="Google Gemini API key (defaults to GEMINI_API_KEY env variable)",
+        default=os.getenv("OPENAI_API_KEY", "default_key"),
+        help="OpenAI API key (defaults to OPENAI_API_KEY env variable)",
     )
     parser.add_argument(
         "--model",
         type=str,
-        default="gemini/gemini-3.5-flash-lite",
-        help="LiteLLM model identifier (default: gemini/gemini-2.5-flash-lite)",
+        default="openai/gpt-4o-mini",
+        help="LiteLLM model identifier (default: openai/gpt-4o-mini)",
     )
     parser.add_argument(
         "--response_type",
@@ -406,7 +407,8 @@ async def GraphRAGQueryEngine(query, plan):
 
     print(f"Initializing GraphRAG configuration with model: {args.model}")
     config = build_graphrag_config(
-        api_key=args.api_key,
+        llm_api_key=args.api_key,
+        emb_api_key=os.getenv("GEMINI_API_KEY", args.api_key),
         llm_model=args.model,
     )
 
