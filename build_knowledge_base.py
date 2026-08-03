@@ -98,12 +98,12 @@ skip_workflows: []
 llm:
   api_key: {gemini_key}
   type: openai_chat
-  model: gemini-3.1-flash-lite
+  model: gpt-4o-mini
   api_base: https://generativelanguage.googleapis.com/v1beta/openai
   max_tokens: 4000
   temperature: 0.0
   request_timeout: 180.0
-  concurrent_requests: 4 # Limit concurrency for rate limits
+  concurrent_requests: 20 # Limit concurrency for rate limits
 
 embeddings:
   async_mode: threaded

@@ -58,10 +58,10 @@ def _load_guardrails() -> list[LoadedGuardrail]:
             return loaded_list
         with open(_CONFIG_FILE, "r", encoding="utf-8") as f:
             data = yaml.safe_load(f) or {}
-        
+
         litellm_settings = data.get("litellm_settings", {})
         guardrails = litellm_settings.get("guardrails", [])
-        
+
         for gr in guardrails:
             if gr.get("default_on", True):
                 name = gr.get("guardrail_name", "unnamed-guardrail")
@@ -90,12 +90,12 @@ def _check_text_safety(text: str, source: str = "input") -> None:
                 preview = text[:120].replace("\n", " ")
                 audit_logger.warning(f"BLOCKED_{source.upper()} | guardrail={gr.name} | word={word!r} | preview={preview!r}")
                 print(f"\n[Guardrail:{gr.name.upper()}] Blocked word detected in {source}: {word!r}")
-                
+
                 if source == "input":
                     detail = f"Your request contains blocked content violating policy '{gr.name}'."
                 else:
                     detail = f"The generated response was blocked because it contains content violating policy '{gr.name}'."
-                
+
                 raise GuardrailViolation(gr.name.upper(), detail)
 
         # 2. Regex pattern check
@@ -109,7 +109,7 @@ def _check_text_safety(text: str, source: str = "input") -> None:
                     f"match={matched_str[:40]!r} | preview={preview!r}"
                 )
                 print(f"\n[Guardrail:{gr.name.upper()}] Blocked pattern matched in {source}: {regex.pattern[:60]!r}")
-                
+
                 if "pii" in gr.name.lower() or "gdpr" in gr.name.lower():
                     if source == "input":
                         violation_detail = "Your request was blocked because it contains Personally Identifiable Information (PII) to ensure GDPR compliance."
@@ -219,7 +219,7 @@ def setup_guardrails(gemini_key: str = None, **kwargs) -> GraphRAGGuardrail:
     guardrail = GraphRAGGuardrail()
     if not isinstance(litellm.callbacks, list):
         litellm.callbacks = []
-    
+
     already = any(isinstance(cb, GraphRAGGuardrail) for cb in litellm.callbacks)
     if not already:
         litellm.callbacks.append(guardrail)
@@ -255,7 +255,7 @@ if __name__ == "__main__":
         print(f"\n{label} {query[:60]}")
         try:
             resp = safe_completion(
-                model="gemini/gemini-3.1-flash-lite",
+                model="openai/gpt-4o-mini",
                 messages=[{"role": "user", "content": query}],
                 api_key=os.getenv("GEMINI_API_KEY"),
             )

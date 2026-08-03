@@ -10,19 +10,19 @@ completion_models:
     model: gpt-4o-mini
     auth_method: api_key # or azure_managed_identity
     api_key: ${OPENAI_API_KEY} # set this in the generated .env file, or remove if managed identity
-    concurrency: 4
+    concurrency: 20
     requests_per_minute: 200
     retry:
       type: exponential_backoff
 
 embedding_models:
   default_embedding_model:
-    model_provider: gemini
-    model: gemini-embedding-001
+    model_provider: openai
+    model: text-embedding-3-small
     auth_method: api_key
-    api_key: ${GRAPHRAG_API_KEY}
-    concurrency: 1
-    requests_per_minute: 10
+    api_key: ${OPENAI_API_KEY}
+    concurrency: 4
+    requests_per_minute: 200
     retry:
       type: exponential_backoff
 

@@ -131,10 +131,10 @@ def build_graphrag_config(
     llm_api_key: str,
     emb_api_key: str,
     llm_model: str = "openai/gpt-4o-mini",
-    embedding_model: str = "gemini/gemini-embedding-001",
+    embedding_model: str = "openai/text-embedding-3-small",
 ) -> GraphRagConfig:
     """
-    Constructs GraphRagConfig configured for LiteLLM with OpenAI/Gemini models.
+    Constructs GraphRagConfig configured for LiteLLM with OpenAI models.
     """
     def parse_model(model_str: str, default_provider: str = "gemini"):
         if "/" in model_str:

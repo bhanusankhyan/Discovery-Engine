@@ -1,2 +1,6 @@
 .env
 .env.backup
+*.log
+cache/
+output/
+__pycache__/
