@@ -1247,3 +1247,7 @@
 2026-08-04 11:25:59,638 | INFO | PRE_CALL | model=gpt-4o-mini | preview='What trends are emerging in payment methods for e-commerce?'
 2026-08-04 11:25:59,641 | INFO | PRE_CALL | model=gpt-4o-mini | preview='What specific consumer behaviors are most influential in the growth of quick com'
 2026-08-04 11:26:10,865 | INFO | PRE_CALL | model=gpt-4o-mini | preview='what is the relation between ecommerce and quick commerce'
+2026-08-04 11:52:50,576 | INFO | Registered guardrail callback with 3 active guardrails.
+2026-08-04 11:52:56,117 | INFO | PRE_CALL | model=gpt-4o-mini | preview='full form of q com'
+2026-08-04 11:53:00,879 | INFO | PRE_CALL | model=text-embedding-3-small | preview='full form of q com'
+2026-08-04 11:53:02,574 | INFO | PRE_CALL | model=gpt-4o-mini | preview='full form of q com'
