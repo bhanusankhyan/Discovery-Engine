@@ -1,121 +1,141 @@
 
 -Goal-
 Given a text document that is potentially relevant to this activity and a list of entity types, identify all entities of those types from the text and all relationships among the identified entities.
- 
+
 -Steps-
 1. Identify all entities. For each identified entity, extract the following information:
 - entity_name: Name of the entity, capitalized
-- entity_type: One of the following types: [{entity_types}]
+- entity_type: One of the following types: [market, technology, platform, consumer, category, service, experience, store, SKU, brand, trend, culture, ecommerce, delivery model, city, urban density, cost structure, purchase behavior]
 - entity_description: Comprehensive description of the entity's attributes and activities
 Format each entity as ("entity"<|><entity_name><|><entity_type><|><entity_description>)
- 
+
 2. From the entities identified in step 1, identify all pairs of (source_entity, target_entity) that are *clearly related* to each other.
 For each pair of related entities, extract the following information:
 - source_entity: name of the source entity, as identified in step 1
 - target_entity: name of the target entity, as identified in step 1
 - relationship_description: explanation as to why you think the source entity and the target entity are related to each other
-- relationship_strength: a numeric score indicating strength of the relationship between the source entity and target entity
- Format each relationship as ("relationship"<|><source_entity><|><target_entity><|><relationship_description><|><relationship_strength>)
- 
+- relationship_strength: an integer score between 1 to 10, indicating strength of the relationship between the source entity and target entity
+Format each relationship as ("relationship"<|><source_entity><|><target_entity><|><relationship_description><|><relationship_strength>)
+
 3. Return output in English as a single list of all the entities and relationships identified in steps 1 and 2. Use **##** as the list delimiter.
- 
-4. When finished, output <|COMPLETE|>
- 
-######################
+
+4. If you have to translate into English, just translate the descriptions, nothing else!
+
+5. When finished, output <|COMPLETE|>.
+
 -Examples-
 ######################
+
 Example 1:
-Entity_types: ORGANIZATION,PERSON
-Text:
-The Verdantis's Central Institution is scheduled to meet on Monday and Thursday, with the institution planning to release its latest policy decision on Thursday at 1:30 p.m. PDT, followed by a press conference where Central Institution Chair Martin Smith will take questions. Investors expect the Market Strategy Committee to hold its benchmark interest rate steady in a range of 3.5%-3.75%.
-######################
-Output:
-("entity"<|>CENTRAL INSTITUTION<|>ORGANIZATION<|>The Central Institution is the Federal Reserve of Verdantis, which is setting interest rates on Monday and Thursday)
-##
-("entity"<|>MARTIN SMITH<|>PERSON<|>Martin Smith is the chair of the Central Institution)
-##
-("entity"<|>MARKET STRATEGY COMMITTEE<|>ORGANIZATION<|>The Central Institution committee makes key decisions about interest rates and the growth of Verdantis's money supply)
-##
-("relationship"<|>MARTIN SMITH<|>CENTRAL INSTITUTION<|>Martin Smith is the Chair of the Central Institution and will answer questions at a press conference<|>9)
-<|COMPLETE|>
 
-######################
+entity_types: [market, technology, platform, consumer, category, service, experience, store, SKU, brand, trend, culture, ecommerce, delivery model, city, urban density, cost structure, purchase behavior]
+text:
+ can provide a recurring revenue layer to fund service reliability and innovation. Technology remains a decisive differentiator, and operators apply data science to route optimization, workforce planning, and pin code-level assortment curation. Regulatory oversight increased during 2025, and consumer authorities secured compliance declarations from leading platforms on dark pattern elimination, which reinforces fair marketplace practices in the India quick commerce market. These elements combine to shape a concentrated market with ongoing innovation and clear pathways toward sustainable unit economics.
+
+Product categories in Quick commerce are as follows:
+
+Grocery & Staples
+Fresh Produce & Dairy
+Snacks & Beverages
+Beauty & Personal Care
+Household & Lifestyle
+Electronics & Accessories
+Pet Care
+Baby Care Essentials
+
+------------------------
+output:
+("entity"<|>QUICK COMMERCE PLATFORMS<|>PLATFORM<|>Quick Commerce platforms are services providing fast and efficient delivery of goods, focusing on high visual engagement to advertise new products and categories to users.)
+##
+("entity"<|>PRODUCT CATEGORIES<|>CATEGORY<|>Product categories signify types of items available for purchase, such as fitness, gardening, and electronics, which users may explore based on lifestyle changes or trends.)
+##
+("entity"<|>LIFESTYLE CHANGES<|>CULTURE<|>Lifestyle changes often prompt users to explore new product categories, affecting their purchasing behavior, such as adopting fitness routines, gardening, or following trends in electronics.)
+##
+("entity"<|>NEED-BASED PRODUCTS<|>SKU<|>Need-based products provide users with functional value and solve specific problems that users face in their daily lives.)
+##
+("entity"<|>WANT-BASED PRODUCTS<|>SKU<|>Want-based products cater to users seeking to enhance their status or lifestyle, often driven by social influence or trends.)
+##
+("entity"<|>VISUAL CONTENT<|>TECHNOLOGY<|>Visual content on Quick Commerce platforms influences user decisions by showcasing products effectively through images and descriptions.)
+##
+("entity"<|>TRUST<|>CULTURE<|>Trust is a key cultural aspect in purchasing decisions, particularly in online environments, where consumers rely on visuals and descriptions to understand products.)
+##
+("entity"<|>USER EXPERIENCE<|>EXPERIENCE<|>User experience is enhanced by understanding customer needs and providing visual cues to strengthen emotional connections, leading to brand loyalty.)
+##
+("entity"<|>BRAND LOYALISTS<|>CONSUMER<|>Brand loyalists are customers who develop emotional connections with products, becoming advocates for the brand through word-of-mouth and contributing to customer acquisition.)
+##
+("relationship"<|>QUICK COMMERCE PLATFORMS<|>PRODUCT CATEGORIES<|>Quick Commerce platforms facilitate the exploration of various product categories by consumers based on lifestyle changes and trends<|>8)
+##
+("relationship"<|>PRODUCT CATEGORIES<|>LIFESTYLE CHANGES<|>Lifestyle changes influence consumers to explore different product categories available through Quick Commerce platforms<|>7)
+##
+("relationship"<|>VISUAL CONTENT<|>QUICK COMMERCE PLATFORMS<|>Visual content is utilized by Quick Commerce platforms to effectively showcase products and categories, influencing consumer purchasing behaviors<|>9)
+##
+("relationship"<|>NEED-BASED PRODUCTS<|>PRODUCT CATEGORIES<|>Need-based products are one of the classifications within product categories that pivot around solving specific consumer problems<|>9)
+##
+("relationship"<|>WANT-BASED PRODUCTS<|>PRODUCT CATEGORIES<|>Want-based products represent another category driven by consumer desire for status enhancement and lifestyle improvements<|>9)
+##
+("relationship"<|>TRUST<|>QUICK COMMERCE PLATFORMS<|>Consumer trust is critical for Quick Commerce platforms to assure that users believe in the quality and efficacy of products showcased<|>8)
+##
+("relationship"<|>USER EXPERIENCE<|>QUICK COMMERCE PLATFORMS<|>User experience significantly influences the effectiveness of Quick Commerce platforms in attracting and retaining customers through emotional engagement<|>9)
+##
+("relationship"<|>BRAND LOYALISTS<|>USER EXPERIENCE<|>Brand loyalists are developed through positive user experiences, leading to long-term customer loyalty and advocacy<|>8)
+<|COMPLETE|>
+#############################
+
+
 Example 2:
-Entity_types: ORGANIZATION
-Text:
-TechGlobal's (TG) stock skyrocketed in its opening day on the Global Exchange Thursday. But IPO experts warn that the semiconductor corporation's debut on the public markets isn't indicative of how other newly listed companies may perform.
 
-TechGlobal, a formerly public company, was taken private by Vision Holdings in 2014. The well-established chip designer says it powers 85% of premium smartphones.
-######################
-Output:
-("entity"<|>TECHGLOBAL<|>ORGANIZATION<|>TechGlobal is a stock now listed on the Global Exchange which powers 85% of premium smartphones)
+entity_types: [market, technology, platform, consumer, category, service, experience, store, SKU, brand, trend, culture, ecommerce, delivery model, city, urban density, cost structure, purchase behavior]
+text:
+Buying and shopping
+
+Buying is a transactional process, motivated by intent. Buying encompasses habitual and routine purchases, and is driven by efficiency and finding good value. In many ways eCommerce has come to be synonymous with buying, as online marketplaces such as Amazon have pioneered price comparison and convenience in an easy to navigate assortment. Unsurprisingly, Amazon has the greatest market share and growth in Western markets through the elimination of friction in the path to efficiency, in terms of price, assortment and/or convenience.
+
+In comparison, Shopping is far more experiential in nature, in contrast to transactional buying. Customers enjoy the process of shopping as it combines discovery and exploration, in a social environment. Shopping is generally more time consuming however rewards shoppers well by finding the perfect party outfit, the best home furnishings or completing a home improvement project. The ability to get help from sales assistants, friends and try the product on are paramount elements in this experience.
+
+While shopping isn’t mutually exclusive with eCommerce, many brands who jump on the Amazon efficiency bandwagon tend to fall off the back of it. Retail is undergoing a radical transformation, however it is a fallacy to think implementing same day shipping is the key to overcoming this shift. Pioneers in the industry, such as Amazon and Alibaba, understand the distinction between buying and shopping and have become cornerstones of the search and intent side of the market.
+
+Yet, there are very few online stores who have attempted to differentiate themselves through an online shopping environment. An integrated omnichannel approach, where retailers are synergising online and offline – is a step in the right direction, however still falls short of making online shopping an experience.
+------------------------
+output:
+("entity"<|>QUICK COMMERCE<|>PLATFORM<|>Quick Commerce is a platform that focuses on delivering products rapidly, leveraging visual communication and functional knowledge to encourage users to try new categories that fit their current lifestyle changes or needs.)
 ##
-("entity"<|>VISION HOLDINGS<|>ORGANIZATION<|>Vision Holdings is a firm that previously owned TechGlobal)
+("entity"<|>USERS<|>CONSUMER<|>Users are individuals who purchase and engage with products on Quick Commerce platforms, often influenced by lifestyle changes or social trends.)
 ##
-("relationship"<|>TECHGLOBAL<|>VISION HOLDINGS<|>Vision Holdings formerly owned TechGlobal from 2014 until present<|>5)
+("entity"<|>CATEGORIES<|>CATEGORY<|>Categories represent classifications of products available on Quick Commerce platforms, encompassing various lifestyles and trends, such as electronics, fashion, and fitness.)
+##
+("entity"<|>NEED-BASED PRODUCT<|>SKU<|>Need-based products are chosen by users who prioritize ultimate value and problem-solving in their purchases, directly addressing their immediate requirements.)
+##
+("entity"<|>WANT-BASED PRODUCT<|>SKU<|>Want-based products appeal to users who desire to enhance their status or lifestyle, without immediate functional necessity.)
+##
+("entity"<|>EMOTIONAL CONNECTION<|>EXPERIENCE<|>Emotional connection relates to how users bond with brands on an emotional level, influencing their loyalty and propensity to become repeat customers.)
+##
+("entity"<|>FUNCTIONAL INFORMATION<|>SERVICE<|>Functional information includes details that explain the utility of a product category, helping users understand how it addresses their current problems.)
+##
+("entity"<|>BRAND LOYALISTS<|>CONSUMER<|>Brand loyalists are consumers who continuously support and promote a brand through word-of-mouth, influenced by their positive experiences.)
+##
+("relationship"<|>QUICK COMMERCE<|>USERS<|>Quick Commerce platforms engage users by addressing their lifestyle changes and providing visual content to enhance decision-making processes<|>8)
+##
+("relationship"<|>USERS<|>CATEGORIES<|>Users explore different product categories based on their changing lifestyle needs and social influences, such as fitness or fashion trends<|>7)
+##
+("relationship"<|>USERS<|>NEED-BASED PRODUCT<|>Users are likely to try need-based products when they perceive clear outcomes or solutions to their problems<|>6)
+##
+("relationship"<|>USERS<|>WANT-BASED PRODUCT<|>Users gravitate towards want-based products when they seek to upgrade their lifestyle or status, reflecting personal desires<|>6)
+##
+("relationship"<|>USERS<|>EMOTIONAL CONNECTION<|>Users build emotional connections with brands, increasing customer loyalty and advocacy<|>9)
+##
+("relationship"<|>QUICK COMMERCE<|>FUNCTIONAL INFORMATION<|>Quick Commerce utilizes functional information to empower users in selecting new product categories according to their current requirements<|>8)
+##
+("relationship"<|>USERS<|>BRAND LOYALISTS<|>Users who form emotional connections often evolve into brand loyalists, advocating for the brand through positive word-of-mouth<|>7)
+## 
+("relationship"<|>QUICK COMMERCE<|>CATEGORIES<|>Quick Commerce platforms organize products into categories, facilitating easier discovery based on user needs and preferences<|>8)
 <|COMPLETE|>
+#############################
 
-######################
-Example 3:
-Entity_types: ORGANIZATION,GEO,PERSON
-Text:
-Five Aurelians jailed for 8 years in Firuzabad and widely regarded as hostages are on their way home to Aurelia.
 
-The swap orchestrated by Quintara was finalized when $8bn of Firuzi funds were transferred to financial institutions in Krohaara, the capital of Quintara.
 
-The exchange initiated in Firuzabad's capital, Tiruzia, led to the four men and one woman, who are also Firuzi nationals, boarding a chartered flight to Krohaara.
-
-They were welcomed by senior Aurelian officials and are now on their way to Aurelia's capital, Cashion.
-
-The Aurelians include 39-year-old businessman Samuel Namara, who has been held in Tiruzia's Alhamia Prison, as well as journalist Durke Bataglani, 59, and environmentalist Meggie Tazbah, 53, who also holds Bratinas nationality.
-######################
-Output:
-("entity"<|>FIRUZABAD<|>GEO<|>Firuzabad held Aurelians as hostages)
-##
-("entity"<|>AURELIA<|>GEO<|>Country seeking to release hostages)
-##
-("entity"<|>QUINTARA<|>GEO<|>Country that negotiated a swap of money in exchange for hostages)
-##
-##
-("entity"<|>TIRUZIA<|>GEO<|>Capital of Firuzabad where the Aurelians were being held)
-##
-("entity"<|>KROHAARA<|>GEO<|>Capital city in Quintara)
-##
-("entity"<|>CASHION<|>GEO<|>Capital city in Aurelia)
-##
-("entity"<|>SAMUEL NAMARA<|>PERSON<|>Aurelian who spent time in Tiruzia's Alhamia Prison)
-##
-("entity"<|>ALHAMIA PRISON<|>GEO<|>Prison in Tiruzia)
-##
-("entity"<|>DURKE BATAGLANI<|>PERSON<|>Aurelian journalist who was held hostage)
-##
-("entity"<|>MEGGIE TAZBAH<|>PERSON<|>Bratinas national and environmentalist who was held hostage)
-##
-("relationship"<|>FIRUZABAD<|>AURELIA<|>Firuzabad negotiated a hostage exchange with Aurelia<|>2)
-##
-("relationship"<|>QUINTARA<|>AURELIA<|>Quintara brokered the hostage exchange between Firuzabad and Aurelia<|>2)
-##
-("relationship"<|>QUINTARA<|>FIRUZABAD<|>Quintara brokered the hostage exchange between Firuzabad and Aurelia<|>2)
-##
-("relationship"<|>SAMUEL NAMARA<|>ALHAMIA PRISON<|>Samuel Namara was a prisoner at Alhamia prison<|>8)
-##
-("relationship"<|>SAMUEL NAMARA<|>MEGGIE TAZBAH<|>Samuel Namara and Meggie Tazbah were exchanged in the same hostage release<|>2)
-##
-("relationship"<|>SAMUEL NAMARA<|>DURKE BATAGLANI<|>Samuel Namara and Durke Bataglani were exchanged in the same hostage release<|>2)
-##
-("relationship"<|>MEGGIE TAZBAH<|>DURKE BATAGLANI<|>Meggie Tazbah and Durke Bataglani were exchanged in the same hostage release<|>2)
-##
-("relationship"<|>SAMUEL NAMARA<|>FIRUZABAD<|>Samuel Namara was a hostage in Firuzabad<|>2)
-##
-("relationship"<|>MEGGIE TAZBAH<|>FIRUZABAD<|>Meggie Tazbah was a hostage in Firuzabad<|>2)
-##
-("relationship"<|>DURKE BATAGLANI<|>FIRUZABAD<|>Durke Bataglani was a hostage in Firuzabad<|>2)
-<|COMPLETE|>
-
-######################
 -Real Data-
 ######################
-Entity_types: {entity_types}
-Text: {input_text}
+entity_types: [market, technology, platform, consumer, category, service, experience, store, SKU, brand, trend, culture, ecommerce, delivery model, city, urban density, cost structure, purchase behavior]
+text: {input_text}
 ######################
-Output:
+output:

@@ -383,6 +383,12 @@ def parse_args(query, plan):
         help="OpenAI API key (defaults to OPENAI_API_KEY env variable)",
     )
     parser.add_argument(
+        "--fallback_model",
+        type=str,
+        default="openai/gpt-4o-mini",
+        help="Fallback LiteLLM model identifier (default: openai/gpt-4o-mini)"
+    )
+    parser.add_argument(
         "--model",
         type=str,
         default="openai/gpt-4o-mini",
@@ -415,40 +421,60 @@ async def GraphRAGQueryEngine(query, plan):
     print(f"\nExecuting [{args.mode.upper()}] Search...")
     print(f"Query: {args.query}\n" + "-" * 50)
 
+    # Attempt search with primary model; if it fails, retry with fallback model
+    response = None
+    async def _run_with_fallback(primary_func, *args_list, **kwargs):
+        try:
+            return await primary_func(*args_list, **kwargs)
+        except Exception as e:
+            print(f"Primary model failed with error: {e}. Falling back to {args.fallback_model}")
+            # Rebuild config using fallback model
+            fallback_config = build_graphrag_config(
+                llm_api_key=args.api_key,
+                emb_api_key=os.getenv("GEMINI_API_KEY", args.api_key),
+                llm_model=args.fallback_model,
+            )
+            # Replace config in kwargs and retry
+            kwargs["config"] = fallback_config
+            return await primary_func(*args_list, **kwargs)
+
     if args.mode == "global":
-        response = await run_global_search(
-            query=args.query,
-            config=config,
-            tables=tables,
+        response = await _run_with_fallback(
+            run_global_search,
+            args.query,
+            config,
+            tables,
             response_type=args.response_type,
         )
     elif args.mode == "local":
-        response = await run_local_search(
-            query=args.query,
-            config=config,
-            tables=tables,
+        response = await _run_with_fallback(
+            run_local_search,
+            args.query,
+            config,
+            tables,
             lancedb_dir=args.lancedb_dir,
             response_type=args.response_type,
         )
     elif args.mode == "drift":
-        response = await run_drift_search(
-            query=args.query,
-            config=config,
-            tables=tables,
+        response = await _run_with_fallback(
+            run_drift_search,
+            args.query,
+            config,
+            tables,
             lancedb_dir=args.lancedb_dir,
             response_type=args.response_type,
         )
     elif args.mode == "basic":
-        response = await run_basic_search(
-            query=args.query,
-            config=config,
-            tables=tables,
+        response = await _run_with_fallback(
+            run_basic_search,
+            args.query,
+            config,
+            tables,
             lancedb_dir=args.lancedb_dir,
             response_type=args.response_type,
         )
     else:
         raise ValueError(f"Unsupported search mode: {args.mode}")
-
     return response
 
 
